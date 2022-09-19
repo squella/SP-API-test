@@ -10,10 +10,34 @@ class ReqresClient(object):
         self._content_type = "application/json"
 
 
-    def get(self, resource, id):
-        url = f"{self._api_url}/{self._version}/{resource}/{id}"
+    def get_query_string(self, resource, qs):
+        url = f"{self._api_url}/{self._version}/{resource}?{qs}"
         response = requests.get(url,
                                 allow_redirects=self._allow_redirect)
+
+        status_code = response.status_code
+        headers = response.headers
+        body = response.json()
+
+        return status_code, headers, body
+
+    def get(self, resource, param):
+        url = f"{self._api_url}/{self._version}/{resource}/{param}"
+        response = requests.get(url,
+                                allow_redirects=self._allow_redirect)
+
+        status_code = response.status_code
+        headers = response.headers
+        body = response.json()
+
+        return status_code, headers, body
+    
+    def post(self, resource, payload):
+
+        url = f"{self._api_url}/{self._version}/{resource}"
+        response = requests.post(url, json=payload, 
+                                 headers={"content-type": self._content_type},
+                                 allow_redirects=self._allow_redirect)
 
         status_code = response.status_code
         headers = response.headers

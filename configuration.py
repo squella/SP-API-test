@@ -17,6 +17,6 @@ if find_dotenv(dotenv_file):
 
 class Configuration(object):
     def __init__(self):
-        
+        self.test_data_path = './data'
         self.reqres_api_url = environ.get('REQRES_URL')
         self.reqres_api_version = environ.get('REQRES_API_VERSION')
